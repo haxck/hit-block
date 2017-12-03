@@ -15,14 +15,15 @@
     <canvas id="id-canvas" width="400" height="300"></canvas>
     <script>
 
-    var imageFromPath = function(path){
-        var img = new Image()
-        img.src = path
-        return img
-    }
+    // var imageFromPath = function(path){
+    //     var img = new Image()
+    //     img.src = path
+    //     return img
+    // }
     // 类似精灵一样的东西
-    var Paddle = function(){
-        var image = imageFromPath('1.png')
+    var Paddle = function(path){
+        var image = new Image()
+        image.src = path
         var o = {
             image : image,
             x:100,
@@ -49,7 +50,7 @@
         g.canvas = canvas
         g.context = context
 
-        //
+        //  
         window.addEventListener("keydown", function(event){
             g.keydowns[event.key] = true
         })
@@ -58,11 +59,17 @@
             g.keydowns[event.key] = false
         })
 
+        // 注册事件
         g.registerAction = function(key, callback){
             g.actions[key] = callback
         }
+
+        // drawImage
+        g.drawImage = function(img){
+            g.context.drawImage(img.image, img.x, img.y)
+        }
         setInterval(function(){
-            //event 
+            // 执行注册过的事件
             var actions = Object.keys(g.actions)
             for (var i = 0; i < actions.length; i++) {
                 var key = actions[i];
@@ -84,7 +91,7 @@
 
     // 主游戏函数
     var __main = function(){
-        var paddle = Paddle()
+        var paddle = Paddle('1.png')
         var game = Game()
 
         game.registerAction('a',function(){
@@ -97,7 +104,7 @@
 
         }
         game.draw = function(){
-            game.context.drawImage(paddle.image, paddle.x, paddle.y)
+            game.drawImage(paddle)
         }
     }
         __main()
