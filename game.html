@@ -5,10 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        canvas{
+            border : 1px solid #000;
+        }
+    </style>
 </head>
 <body>
+        <canvas id="id-canvas" width="400" height="300"></canvas>
     <script>
-    
+        var log = console.log.bind(console)
+        var canvas = document.querySelector("#id-canvas")
+        var context = canvas.getContext("2d")
+        var img = new Image()
+        var x = 100
+        var y = 280
+        var leftDown = false
+        var rightDown = false
+        var speed = 5
+        img.src = '1.png'
+        // log(context)
+        img.onload = function(){
+            context.drawImage(img,x,y)
+        }
+
+        window.addEventListener('keydown', function(event){
+            // log(event);
+            var key = event.key
+            if(key == 'a'){
+                leftDown = true
+            }else if(key == 'd'){
+                rightDown = true
+            }
+        })
+        window.addEventListener('keyup', function(event){
+            // log(event);
+            var key = event.key
+            if(key == 'a'){
+                leftDown = false
+            }else if(key == 'd'){
+                rightDown = false
+            }
+        })
+        setInterval(function(){
+            if(leftDown){
+                x -= speed
+            }else if(rightDown){
+                x += speed
+            }
+            context.clearRect(0,0,canvas.width,canvas.height)
+            context.drawImage(img,x,y)
+        },1000/30)
+
     </script>
+
 </body>
 </html>
