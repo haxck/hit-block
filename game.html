@@ -7,108 +7,15 @@
     <title>Document</title>
     <style>
         canvas{
-            border : 1px solid #000;
+            border : 1px solid rgb(0, 0, 0);
         }
     </style>
+        <script src="./js/game.js"></script>
+        <script src="./js/paddle.js"></script>
+        <script src="./js/ball.js"></script>
 </head>
 <body>
     <canvas id="id-canvas" width="400" height="300"></canvas>
-    <script>
-
-    // var imageFromPath = function(path){
-    //     var img = new Image()
-    //     img.src = path
-    //     return img
-    // }
-    // 类似精灵一样的东西
-    var Paddle = function(path){
-        var image = new Image()
-        image.src = path
-        var o = {
-            image : image,
-            x:100,
-            y:200,
-            speed:5,
-        }
-        o.moveLeft = function(){
-            o.x -= o.speed
-        }
-        o.moveRight = function(){
-            o.x += o.speed
-        }
-        return o
-    }
-    // 场景相关
-    var Game = function(){
-        var g = {
-            actions: {},
-            keydowns: {}
-        }
-        // 获取 Canvas
-        var canvas = document.querySelector("#id-canvas")
-        var context = canvas.getContext("2d")
-        g.canvas = canvas
-        g.context = context
-
-        //  
-        window.addEventListener("keydown", function(event){
-            g.keydowns[event.key] = true
-        })
-        
-        window.addEventListener("keyup", function(event){
-            g.keydowns[event.key] = false
-        })
-
-        // 注册事件
-        g.registerAction = function(key, callback){
-            g.actions[key] = callback
-        }
-
-        // drawImage
-        g.drawImage = function(img){
-            g.context.drawImage(img.image, img.x, img.y)
-        }
-        setInterval(function(){
-            // 执行注册过的事件
-            var actions = Object.keys(g.actions)
-            for (var i = 0; i < actions.length; i++) {
-                var key = actions[i];
-                if(g.keydowns[key]){
-                    g.actions[key]()
-                }
-                
-            }
-
-            // updata
-            g.updata()
-            // clear
-            context.clearRect(0,0,canvas.width,canvas.height)
-            // draw
-            g.draw()
-        },1000/30)
-        return g
-    }
-
-    // 主游戏函数
-    var __main = function(){
-        var paddle = Paddle('1.png')
-        var game = Game()
-
-        game.registerAction('a',function(){
-            paddle.moveLeft()
-        })
-        game.registerAction('d',function(){
-            paddle.moveRight()
-        })
-        game.updata = function(){
-
-        }
-        game.draw = function(){
-            game.drawImage(paddle)
-        }
-    }
-        __main()
-    </script>
-
+    <script src="./js/main.js"></script>
 </body>
 </html>
